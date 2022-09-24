@@ -4,7 +4,7 @@ import random
 from tkinter import *
 
 
-def generate(mode='letters', lenght=8):
+def generate(mode='letters'):
     global password
 
     # Possible character list
@@ -28,6 +28,12 @@ def generate(mode='letters', lenght=8):
             character_list += string.punctuation
             break
 
+    # Get the length from the entry
+    try:
+        lenght = int(entry.get())
+    except:
+        password.set('Please enter the length of the password')
+
     for i in range(int(lenght)):
 
         # Picking a random character and adding to password
@@ -44,39 +50,43 @@ if __name__ == "__main__":
     # GUI initialization
     gui = Tk()
     gui.title('Password Generator')
-    gui.geometry('600x400')
+    gui.geometry('400x350')
     gui.configure(bg='black')
     gui.resizable(False, False)
+
+    # Images and icons
+    icon = PhotoImage(file='GUI\\logo.png')
+    gui.iconphoto(True, icon)
 
     # Generation textfield
     password = StringVar()
 
     generation_field = Entry(gui, textvariable=password,
                              bg='#191818', borderwidth=1, highlightthickness=1, fg='light green', font=("Times New Roman", 12),
-                             width=50)
-    generation_field.grid(columnspan=4, ipadx=20, padx=60, pady=100)
+                             width=30)
+    generation_field.grid(columnspan=1, ipadx=20, padx=60, pady=50)
 
     # Buttons
-    digits_button = Button(gui, bg='gray', text='Digits', activebackground="green", anchor='center',
-                           borderwidth=0, highlightthickness=0, command=lambda: generate('digits', 5))
-    digits_button.grid(row=1, column=0, pady=10)
+    letters_button = Button(gui, bg='gray', text='Only Letters', activebackground="green", anchor='center',
+                            borderwidth=0, highlightthickness=0, command=lambda: generate('letters'))
+    letters_button.grid(row=3, column=0, pady=10)
 
-    letters_button = Button(gui, bg='gray', text='Letters', activebackground="green", anchor='center',
-                            borderwidth=0, highlightthickness=0, command=lambda: generate('letters', 5))
-    letters_button.grid(row=2, column=0, pady=10)
+    digits_button = Button(gui, bg='gray', text='With Digits', activebackground="green", anchor='center',
+                           borderwidth=0, highlightthickness=0, command=lambda: generate('digits'))
+    digits_button.grid(row=4, column=0, pady=10)
 
-    special_button = Button(gui, bg='gray', text='Special characters', activebackground="green", anchor='center',
-                            borderwidth=0, highlightthickness=0, command=lambda: generate('special', 5))
-    special_button.grid(row=3, column=0, pady=10)
+    special_button = Button(gui, bg='gray', text='With Special Characters', activebackground="green", anchor='center',
+                            borderwidth=0, highlightthickness=0, command=lambda: generate('special'))
+    special_button.grid(row=5, column=0, pady=10)
 
     # Getting the lenght of the password
     text = Label(gui, text='Enter the length of the password',
                  font=('calibre', 10, 'bold'), background='black', fg='white')
-    text.grid(row=1, column=2)
+    text.grid(row=1, column=0, pady=2)
 
-    entry = Entry(gui, bg='#191818', fg='green',
-                  borderwidth=1, highlightthickness=1)
-    entry.grid(row=2, column=2, ipadx=10)
+    entry = Entry(gui, bg='#191818', fg='white',
+                  borderwidth=1, highlightthickness=1, width=4)
+    entry.grid(row=2, column=0, pady=10)
 
     # Execute tkinter
     gui.mainloop()
