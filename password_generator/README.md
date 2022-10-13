@@ -1,1 +1,2 @@
-This is a simple generator of secure passwords.
+# password_generator
+A simple generator for secure passwords
